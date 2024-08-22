@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'To-Do List',
       home: Scaffold(
-        body: TodoListScreen()
+        body: HomeScreen(),
       ),
     );
   }
