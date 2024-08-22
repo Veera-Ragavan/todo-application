@@ -24,6 +24,7 @@ class Register extends StatelessWidget {
 }
 
 // Home Screen
+
 class HomeScreen extends StatelessWidget {
   final TextEditingController user_nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -31,7 +32,7 @@ class HomeScreen extends StatelessWidget {
   final TextEditingController mobile_noController = TextEditingController();
 
   Future<void> register() async {
-    Uri url = Uri.parse('http://192.168.155.170:9876/user');
+    Uri url = Uri.parse('$myServerUrl/user');
 
     var data = {
       'user_name': user_nameController.text,
@@ -61,78 +62,109 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text('TooDoo')),
+        title: Text('TooDoo'),
         backgroundColor: Colors.amberAccent,
       ),
-      backgroundColor: Colors.blue,
-      body: SingleChildScrollView(
-        child: DecoratedBox(
-          decoration: BoxDecoration(),
-          child: Center(
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(
+                "https://www.reviewstudio.com/wp-content/uploads/2021/04/Header-image-optimize-to-do-list-scaled.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            height: 400,
+            width: 400,
             child: Column(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    controller: user_nameController,
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.people, color: Colors.white),
-                      labelText: 'Username',
-                      hintText: 'Enter your username',
+                Title(
+                  color: Colors.black,
+                  child: Text(
+                    'Register Page',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: TextField(
-                    controller: emailController,
-                    style: TextStyle(color: Colors.amber),
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      hintText: 'Enter your email',
-                    ),
+                SizedBox(height: 10, width: 30),
+                TextField(
+                  controller: user_nameController,
+                  style: TextStyle(color: Colors.black),
+                  decoration: InputDecoration(
+                    labelText: 'Username',
+                    labelStyle: TextStyle(color: Colors.black),
+                    hintText: 'Enter your username',
                   ),
                 ),
                 SizedBox(height: 10),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: TextField(
-                    controller: passwordController,
-                    style: TextStyle(color: Colors.amber),
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      hintText: 'Enter your password',
-                    ),
+                TextField(
+                  controller: emailController,
+                  style: TextStyle(color: Colors.black),
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    labelStyle: TextStyle(color: Colors.black),
+                    hintText: 'Enter your email',
                   ),
                 ),
                 SizedBox(height: 10),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: TextField(
-                    controller: mobile_noController,
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      labelText: 'Phone No',
-                      hintText: 'Enter your phone number',
-                    ),
+                TextField(
+                  controller: passwordController,
+                  style: TextStyle(color: Colors.black),
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    labelStyle: TextStyle(color: Colors.black),
+                    hintText: 'Enter your password',
+                  ),
+                  obscureText: true, // Obscure password text for security
+                ),
+                SizedBox(height: 10),
+                TextField(
+                  controller: mobile_noController,
+                  style: TextStyle(color: Colors.black),
+                  decoration: InputDecoration(
+                    labelText: 'Phone No',
+                    labelStyle: TextStyle(color: Colors.black),
+                    hintText: 'Enter your phone number',
                   ),
                 ),
                 SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: register,
-                  child: Text('Register'),
-                ),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Sign_in()),
-                    );
-                  },
-                  child: Text('Sign In'),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    ElevatedButton(
+                      onPressed: register,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red, // Background color
+                      ),
+                      child: Text(
+                        'Register',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    SizedBox(width: 10), // Space between buttons
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Sign_in()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red, // Background color
+                      ),
+                      child: Text(
+                        'Sign In',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

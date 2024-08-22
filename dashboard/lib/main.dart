@@ -1,4 +1,4 @@
-import 'package:dashboard/Todo_dash.dart';
+import 'package:dashboard/register.dart';
 import 'package:flutter/material.dart';
 
 void main() {
