@@ -87,7 +87,7 @@ class Sign_in extends StatelessWidget {
                 controller: passwordController,
                 style: TextStyle(color: Colors.black),
                 decoration: InputDecoration(
-                    labelText: 'password',
+                    labelText: 'Password',
                     labelStyle: TextStyle(color: Colors.black),
                     hintText: 'Enter your password'),
                 obscureText: true,
