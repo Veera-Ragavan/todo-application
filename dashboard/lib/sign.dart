@@ -2,14 +2,13 @@ import 'package:dashboard/register.dart';
 import 'package:flutter/material.dart';
 
 class Sign_in extends StatelessWidget {
-   Sign_in({super.key});
-
+  Sign_in({super.key});
 
   final TextEditingController user_nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController mobile_noController = TextEditingController();
-  
+
   get http => null;
 
   Future<void> register() async {
@@ -42,41 +41,73 @@ class Sign_in extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Center(child: Text('SIGN IN PAGE')),
-          backgroundColor: Colors.yellow),
-      backgroundColor: Colors.blue,
-      body: SingleChildScrollView(
-        child: DecoratedBox(
-          decoration: BoxDecoration(),
-          child: Center(
+          title: Center(child: Text('')), backgroundColor: Colors.yellow),
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(
+                "https://www.reviewstudio.com/wp-content/uploads/2021/04/Header-image-optimize-to-do-list-scaled.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Center(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            height: 400,
+            width: 400,
             child: Column(children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(10),
-                child: TextField(
-                  style: TextStyle(color: Colors.amber),
-                  decoration: InputDecoration(
-                    labelText: 'username',
-                    hintText: 'enter mail id',
+              Title(
+                color: Colors.black,
+                child: Text(
+                  'Sign up',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(10),
-                child: TextField(
-                  style: TextStyle(color: Colors.amber),
-                  decoration: InputDecoration(
-                      labelText: 'password', hintText: 'enter your password'),
+              SizedBox(height: 10, width: 30),
+              TextField(
+                controller: emailController,
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  labelStyle: TextStyle(color: Colors.black),
+                  hintText: 'Enter your username',
                 ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Register()),
-                  );
-                },
-                child: Text('Login'),
+              SizedBox(
+                height: 10,
+                width: 30,
               ),
+              TextField(
+                controller: passwordController,
+                style: TextStyle(color: Colors.black),
+                decoration: InputDecoration(
+                    labelText: 'password',
+                    labelStyle: TextStyle(color: Colors.black),
+                    hintText: 'Enter your password'),
+                obscureText: true,
+              ),
+              SizedBox(height: 10),
+              Row(mainAxisSize: MainAxisSize.max, children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Register()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                  child: Text(
+                    'Login',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ]),
             ]),
           ),
         ),
