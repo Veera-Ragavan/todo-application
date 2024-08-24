@@ -1,5 +1,5 @@
-import 'package:dashboard/register.dart';
 import 'package:flutter/material.dart';
+import 'package:dashboard/Todo_dash.dart';
 
 class Sign_in extends StatelessWidget {
   Sign_in({super.key});
@@ -50,7 +50,7 @@ class Sign_in extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: Center(
+      child: Center(
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
@@ -68,8 +68,9 @@ class Sign_in extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-              SizedBox(height: 10, width: 30),
+              ),  
+            SizedBox(height: 10, width: 30),
+              
               TextField(
                 controller: emailController,
                 style: TextStyle(color: Colors.black),
@@ -92,13 +93,13 @@ class Sign_in extends StatelessWidget {
                     hintText: 'Enter your password'),
                 obscureText: true,
               ),
-              SizedBox(height: 10),
+            SizedBox(height: 10),
               Row(mainAxisSize: MainAxisSize.max, children: [
-                ElevatedButton(
+               ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Register()),
+                      MaterialPageRoute(builder: (context) => TodoListScreen()),
                     );
                   },
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
@@ -106,7 +107,7 @@ class Sign_in extends StatelessWidget {
                     'Login',
                     style: TextStyle(color: Colors.white),
                   ),
-                ),
+                ),   
               ]),
             ]),
           ),

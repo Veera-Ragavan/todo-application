@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // Import for date formatting
@@ -36,7 +39,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
     }
   }
 
-  void _addTask(String label, String description, DateTime startDate, DateTime endDate) {
+  void _addTask(
+      String label, String description, DateTime startDate, DateTime endDate) {
     if (label.isNotEmpty && description.isNotEmpty) {
       setState(() {
         _tasks.add({
@@ -52,7 +56,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
 
   void _showAddTaskDialog() {
     final TextEditingController _labelController = TextEditingController();
-    final TextEditingController _descriptionController = TextEditingController();
+    final TextEditingController _descriptionController =
+        TextEditingController();
     DateTime? _startDate;
     DateTime? _endDate;
 
@@ -133,7 +138,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
               child: Text('Add'),
               onPressed: () {
                 if (_startDate != null && _endDate != null) {
-                  _addTask(_labelController.text, _descriptionController.text, _startDate!, _endDate!);
+                  _addTask(_labelController.text, _descriptionController.text,
+                      _startDate!, _endDate!);
                   Navigator.of(context).pop();
                 }
               },
@@ -154,8 +160,10 @@ class _TodoListScreenState extends State<TodoListScreen> {
   }
 
   void _updateTask(int index) {
-    final TextEditingController _labelController = TextEditingController(text: _tasks[index]['label']);
-    final TextEditingController _descriptionController = TextEditingController(text: _tasks[index]['description']);
+    final TextEditingController _labelController =
+        TextEditingController(text: _tasks[index]['label']);
+    final TextEditingController _descriptionController =
+        TextEditingController(text: _tasks[index]['description']);
     DateTime? _startDate = _tasks[index]['startDate'];
     DateTime? _endDate = _tasks[index]['endDate'];
 
@@ -261,6 +269,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.amber,
+
         title: Text('To-Do List'),
         actions: [
           IconButton(
@@ -269,62 +279,83 @@ class _TodoListScreenState extends State<TodoListScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: _tasks.map((task) {
-            return SizedBox(
-              width: 300, // Medium size for the card
-              height: 350, // Adjust height for a medium-sized card
-              child: Card(
-                margin: EdgeInsets.all(10),
-                elevation: 4,
-                child: Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        task['label'] ?? 'No Title',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+      
+      body: DecoratedBox(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(
+                "https://www.reviewstudio.com/wp-content/uploads/2021/04/Header-image-optimize-to-do-list-scaled.jpg"),
+            fit: BoxFit.fill,
+          ),
+        ),
+      child: ListView(
+        children: [
+       Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Wrap(
+                  alignment: WrapAlignment.spaceBetween,
+                  spacing: 30,
+                  runSpacing: 100,
+                  children: _tasks.map((task) {
+                    return SizedBox(
+                      width: 300, // Medium size for the card
+                      height: 250, // Adjust height for a medium-sized card
+                      child: Card(
+                        margin: EdgeInsets.all(10),
+                        elevation: 4,
+                        child: Padding(
+                          padding: EdgeInsets.all(10.0),
+                        
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                task['label'] ?? 'No Title',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            SizedBox(height: 10),
+                              Text(
+                                task['description'] ?? 'No Description',
+                                style: TextStyle(color: Colors.indigo),
+                              ),
+                              SizedBox(height: 20),
+                              Text(
+                                'Start Date: ${task['startDate'] != null ? DateFormat('yyyy-MM-dd').format(task['startDate']) : 'Not Set'}',
+                                style: TextStyle(color: Colors.grey[600]),
+                              ),
+                              Text(
+                                'End Date: ${task['endDate'] != null ? DateFormat('yyyy-MM-dd').format(task['endDate']) : 'Not Set'}',
+                                style: TextStyle(color: Colors.grey[600]),
+                              ),
+                              Spacer(),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                    icon: Icon(Icons.delete),
+                                    onPressed: () => _removeTask(_tasks.indexOf(task)),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(Icons.update),
+                                    onPressed: () => _updateTask(_tasks.indexOf(task)),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      SizedBox(height: 10),
-                      Text(
-                        task['description'] ?? 'No Description',
-                        style: TextStyle(color: Colors.indigo),
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        'Start Date: ${task['startDate'] != null ? DateFormat('yyyy-MM-dd').format(task['startDate']) : 'Not Set'}',
-                        style: TextStyle(color: Colors.grey[600]),
-                      ),
-                      Text(
-                        'End Date: ${task['endDate'] != null ? DateFormat('yyyy-MM-dd').format(task['endDate']) : 'Not Set'}',
-                        style: TextStyle(color: Colors.grey[600]),
-                      ),
-                      Spacer(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.delete),
-                            onPressed: () => _removeTask(_tasks.indexOf(task)),
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.update),
-                            onPressed: () => _updateTask(_tasks.indexOf(task)),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          }).toList(),
+                    );
+                  }).toList(),
+                                ),
+              ],
+            ),
+              ],
         ),
       ),
     );
